@@ -14,19 +14,23 @@
  *     http://www.cin.ufpe.br/~hemr/
  * ******************************************************************/
 
-package stacker.rpn.lexer;
+package classes;
 
 /**
  * @author Henrique Rebelo
  */
-public enum TokenType {
+public class Token {
 
-    // Literals.
-    NUM,
+    public final TokenType type; // token type
+    public final String lexeme; // token value
 
-    // Single-character tokens for operations.
-    MINUS, PLUS, SLASH, STAR,
+    public Token(TokenType type, String value) {
+        this.type = type;
+        this.lexeme = value;
+    }
 
-    EOF
-
+    @Override
+    public String toString() {
+        return "Token [type=" + this.type + ", lexeme=" + this.lexeme + "]";
+    }
 }

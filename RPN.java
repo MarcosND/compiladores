@@ -5,7 +5,10 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-import stacker.rpn.lexer.*;
+
+import classes.Regex;
+import classes.TokenType;
+import classes.Token;
 
 public class RPN {
     public static void main(String[] args) throws Exception {
@@ -72,23 +75,23 @@ public class RPN {
     }
 
     public static TokenType convertTK(String line) throws Exception {
-        try {
-            Integer.parseInt(line);
+        if (Regex.isNum(line)) {
             return TokenType.NUM;
-        } catch (NumberFormatException e) {
-            if (line.equals("+")) {
-                return TokenType.PLUS;
-            } else if (line.equals("-")) {
+        } else if (Regex.isOP(line)) {
+            if (Regex.isMinus(line)) {
                 return TokenType.MINUS;
-            } else if (line.equals("/")) {
-                return TokenType.SLASH;
-            } else if (line.equals("*")) {
+            }
+            if (Regex.isPlus(line)) {
+                return TokenType.PLUS;
+            }
+            if (Regex.isStar(line)) {
                 return TokenType.STAR;
-            } else {
-                throw new Exception("Error: Unexpected character: " + line);
+            }
+            if (Regex.isSlash(line)) {
+                return TokenType.SLASH;
             }
         }
-
+        throw new Exception("Error: Unexpected character: " + line);
     }
 
 }
